@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="728" height="90" viewBox="0 0 728 90">
+  <title>NightHarbor VPS advertisement</title>
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d1620"/>
+      <stop offset="1" stop-color="#16283a"/>
+    </linearGradient>
+  </defs>
+  <rect width="728" height="90" fill="url(#sea)"/>
+  <rect x="0.5" y="0.5" width="727" height="89" fill="none" stroke="#2c4a66"/>
+  <circle cx="58" cy="34" r="16" fill="#e9e3c9"/>
+  <circle cx="64" cy="29" r="14" fill="#0f1a26"/>
+  <path d="M18 66 Q38 58 58 66 T98 66 T138 66" fill="none" stroke="#3f6f99" stroke-width="3"/>
+  <path d="M18 76 Q38 68 58 76 T98 76 T138 76" fill="none" stroke="#2c4a66" stroke-width="3"/>
+  <text x="160" y="42" font-family="Verdana, DejaVu Sans, sans-serif" font-size="26" font-weight="700" fill="#e8eef4">NightHarbor <tspan fill="#5fa8d3">VPS</tspan></text>
+  <text x="161" y="66" font-family="Verdana, DejaVu Sans, sans-serif" font-size="13" fill="#9fb4c7">Offshore KVM · 10 Gbit uplinks · Crypto accepted</text>
+  <rect x="566" y="26" width="138" height="38" rx="3" fill="#5fa8d3"/>
+  <text x="635" y="50" text-anchor="middle" font-family="Verdana, DejaVu Sans, sans-serif" font-size="14" font-weight="700" fill="#0d1620">from 4.90/mo</text>
+</svg>

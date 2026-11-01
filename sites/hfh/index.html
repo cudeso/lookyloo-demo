@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HFH Network Services · Website monitoring and uptime reporting</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/hfh.css">
+  <script src="assets/js/ui-helper.js" defer></script>
+  <script src="assets/js/hfh.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <p class="demo-note">Fictional company. Lookyloo training demo. <span data-session>Client portal</span></p>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="./"><img src="assets/img/logo.svg" alt="HFH Network Services" width="232" height="48"></a>
+      <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">Menu</button>
+      <nav id="site-menu" class="site-menu" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#plans">Plans</a>
+        <a href="report.html">Example report</a>
+        <a href="#faq">FAQ</a>
+        <a class="button" href="#contact">Book a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Website monitoring for European businesses</p>
+          <h1>Know your site is down before your customers do.</h1>
+          <p class="lead">HFH checks your websites, APIs and certificates from four European locations every 30 seconds, alerts the right person within a minute and turns every incident into a clear monthly report.</p>
+          <div class="hero-actions">
+            <a class="button" href="#contact">Book a demo</a>
+            <a class="button button-ghost" href="report.html">See an example report</a>
+          </div>
+        </div>
+        <figure>
+          <img src="assets/img/network-topology.svg" alt="Diagram of HFH probes in Frankfurt, Amsterdam, Warsaw and Madrid checking a website through its edge, load balancer and three web servers" width="960" height="540">
+          <figcaption>Every check follows the same path as a real visitor: DNS, TLS, edge, load balancer and application.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="facts" aria-label="HFH in numbers">
+      <div class="wrap">
+        <div><strong>2,140</strong><span>sites monitored</span></div>
+        <div><strong>30 s</strong><span>check interval on every plan</span></div>
+        <div><strong>4</strong><span>probe locations in the EU</span></div>
+        <div><strong>52 s</strong><span>median time to first alert</span></div>
+      </div>
+    </section>
+
+    <section class="band" id="services">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Services</p>
+          <h2>Monitoring that explains what went wrong.</h2>
+          <p>Uptime percentages alone do not help an on-call engineer at 03:00. HFH records the full request path for every failed check, so you can see whether DNS, the certificate, the CDN or your own servers caused the problem.</p>
+        </div>
+        <div class="services">
+          <article class="service">
+            <span class="mark">UP</span>
+            <h3>Uptime and API checks</h3>
+            <p>HTTP, HTTPS, keyword and JSON assertions from four locations. An alert fires only when two locations agree, which keeps false alarms below one a month.</p>
+          </article>
+          <article class="service">
+            <span class="mark">ms</span>
+            <h3>Response time tracking</h3>
+            <p>DNS, connect, TLS and first-byte timings for every check. Trend lines show slow degradation long before it becomes an outage.</p>
+          </article>
+          <article class="service">
+            <span class="mark">IR</span>
+            <h3>Incident reports and status pages</h3>
+            <p>A hosted status page on your own domain, automatic incident timelines and a monthly availability report you can send straight to management.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band alt" id="plans">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Plans</p>
+          <h2>Simple monthly pricing.</h2>
+          <p>All prices exclude VAT. Every plan includes a 14-day trial and can be cancelled monthly.</p>
+        </div>
+        <div class="plans">
+          <article class="plan">
+            <h3>Essentials</h3>
+            <p class="price">€29 <small>/ month</small></p>
+            <p>For a single business website and its contact forms.</p>
+            <ul>
+              <li>10 monitors</li>
+              <li>Email and SMS alerts</li>
+              <li>Certificate expiry warnings</li>
+              <li>90 days of history</li>
+            </ul>
+            <a class="button button-ghost" href="#contact">Start trial</a>
+          </article>
+          <article class="plan featured">
+            <span class="badge-popular">Most chosen</span>
+            <h3>Business</h3>
+            <p class="price">€119 <small>/ month</small></p>
+            <p>For web shops and SaaS teams with an on-call rota.</p>
+            <ul>
+              <li>75 monitors, API assertions</li>
+              <li>Slack, Teams and phone escalation</li>
+              <li>Hosted status page on your domain</li>
+              <li>Monthly availability report</li>
+            </ul>
+            <a class="button" href="#contact">Start trial</a>
+          </article>
+          <article class="plan">
+            <h3>Operations</h3>
+            <p class="price">€390 <small>/ month</small></p>
+            <p>For agencies and hosting providers managing many customers.</p>
+            <ul>
+              <li>400 monitors, multi-client workspaces</li>
+              <li>White-label reports and status pages</li>
+              <li>SLA tracking per customer</li>
+              <li>Named support engineer</li>
+            </ul>
+            <a class="button button-ghost" href="#contact">Talk to sales</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="process">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">How it works</p>
+          <h2>From sign-up to first report in a day.</h2>
+        </div>
+        <ol class="steps">
+          <li><h3>Add your sites</h3><p>List the pages, APIs and certificates you depend on. We suggest checks based on your sitemap.</p></li>
+          <li><h3>Set alert rules</h3><p>Choose who gets woken up, after how long and through which channel.</p></li>
+          <li><h3>We watch</h3><p>Probes in Frankfurt, Amsterdam, Warsaw and Madrid check every 30 seconds, day and night.</p></li>
+          <li><h3>Review monthly</h3><p>Your report summarises availability, slow pages and incidents with their root cause.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band alt" id="sample">
+      <div class="wrap sample">
+        <div>
+          <p class="eyebrow">Try it</p>
+          <h2>See a sample check result.</h2>
+          <p>Pick one of our demonstration monitors to see the detail recorded for each check. These are stored sample results: no request is sent to any website.</p>
+          <form class="sample-form" id="sample-form">
+            <label for="sample-monitor">Demonstration monitor</label>
+            <select id="sample-monitor">
+              <option value="shop">Web shop checkout page</option>
+              <option value="api">Booking API health endpoint</option>
+              <option value="portal">Customer portal login page</option>
+            </select>
+            <button class="button" type="submit">Show sample result</button>
+            <p>Results come from fixed sample data for training purposes.</p>
+          </form>
+        </div>
+        <div class="result" aria-live="polite">
+          <h3 id="result-title">Web shop checkout page</h3>
+          <dl>
+            <dt>Status</dt><dd id="result-status" class="status-ok">Up · 200 OK</dd>
+            <dt>Locations agreeing</dt><dd id="result-locations">4 of 4</dd>
+            <dt>DNS lookup</dt><dd id="result-dns">12 ms</dd>
+            <dt>TLS handshake</dt><dd id="result-tls">38 ms</dd>
+            <dt>Time to first byte</dt><dd id="result-ttfb">164 ms</dd>
+            <dt>Certificate expires in</dt><dd id="result-cert">61 days</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="band faq" id="faq">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">FAQ</p>
+          <h2>Common questions.</h2>
+        </div>
+        <details>
+          <summary>Will monitoring slow down my website?</summary>
+          <p>No. Each location sends one lightweight request per check, about eight requests a minute in total. That is less traffic than a single visitor browsing your shop.</p>
+        </details>
+        <details>
+          <summary>Can you monitor pages behind a login?</summary>
+          <p>Yes, on the Business and Operations plans. You create a dedicated test account for us and we store its credentials encrypted in our EU data centre.</p>
+        </details>
+        <details>
+          <summary>Where is my data stored?</summary>
+          <p>All check results and reports are stored in Frankfurt and Amsterdam. We do not transfer data outside the European Economic Area.</p>
+        </details>
+        <details>
+          <summary>What happens if a probe location itself has problems?</summary>
+          <p>An alert needs at least two locations to agree. If one probe fails, the others keep checking and our own operations team is paged instead of you.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="band alt" id="contact">
+      <div class="wrap contact">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Book a 20-minute demo.</h2>
+          <p>We will set up monitors for two of your pages during the call and send you the first report a week later.</p>
+          <address>
+            HFH Network Services B.V. (fictional)<br>
+            Kanaalweg 18, 3526 KL Utrecht<br>
+            sales@hfh.example
+          </address>
+        </div>
+        <!-- Inputs have no name attributes, so nothing would be submitted even without JavaScript. -->
+        <form class="contact-form" id="contact-form">
+          <label>Name<input type="text" autocomplete="off"></label>
+          <label>Work email<input type="email" autocomplete="off"></label>
+          <label>Company<input type="text" autocomplete="off"></label>
+          <label>How many sites do you run?<textarea rows="3"></textarea></label>
+          <button class="button" type="submit">Request demo</button>
+          <p class="form-message" id="contact-message" role="status" hidden>Thank you. This is a fictional company for Lookyloo training: nothing was sent or stored.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 HFH Network Services. Fictional company created for Lookyloo training.</span>
+      <span><a href="report.html">Example report</a> · <a href="#faq">FAQ</a> · <a href="#contact">Contact</a></span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <title>Monitoring topology: probe locations checking a customer site through its edge, load balancer and application servers</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef6f8"/>
+      <stop offset="1" stop-color="#dbeaf0"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0 H0 V32" fill="none" stroke="#c9dde5" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#0f766e"/>
+    </marker>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <g font-family="Helvetica Neue, Arial, DejaVu Sans, sans-serif" font-size="13" fill="#0b2530">
+    <text x="40" y="44" font-size="15" font-weight="700" letter-spacing="1.5" fill="#0f766e">PROBE LOCATIONS</text>
+    <g fill="#ffffff" stroke="#0f766e" stroke-width="2">
+      <rect x="40" y="70" width="150" height="60" rx="8"/>
+      <rect x="40" y="170" width="150" height="60" rx="8"/>
+      <rect x="40" y="270" width="150" height="60" rx="8"/>
+      <rect x="40" y="370" width="150" height="60" rx="8"/>
+    </g>
+    <g fill="#16a34a">
+      <circle cx="172" cy="91" r="6"/><circle cx="172" cy="191" r="6"/><circle cx="172" cy="291" r="6"/><circle cx="172" cy="391" r="6"/>
+    </g>
+    <text x="60" y="96" font-weight="700">Frankfurt</text><text x="60" y="116" fill="#4b6470">every 30 s · 118 ms</text>
+    <text x="60" y="196" font-weight="700">Amsterdam</text><text x="60" y="216" fill="#4b6470">every 30 s · 124 ms</text>
+    <text x="60" y="296" font-weight="700">Warsaw</text><text x="60" y="316" fill="#4b6470">every 30 s · 141 ms</text>
+    <text x="60" y="396" font-weight="700">Madrid</text><text x="60" y="416" fill="#4b6470">every 30 s · 152 ms</text>
+
+    <g fill="none" stroke="#0f766e" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M190 100 C260 100 260 240 318 248"/>
+      <path d="M190 200 C250 200 260 245 318 252"/>
+      <path d="M190 300 C250 300 260 262 318 258"/>
+      <path d="M190 400 C260 400 260 270 318 264"/>
+    </g>
+
+    <rect x="320" y="200" width="120" height="110" rx="10" fill="#0f766e"/>
+    <text x="380" y="246" text-anchor="middle" font-weight="700" fill="#ffffff">EDGE</text>
+    <text x="380" y="266" text-anchor="middle" fill="#ccefe9">CDN / DNS</text>
+    <text x="380" y="286" text-anchor="middle" fill="#ccefe9">TLS valid 61 d</text>
+
+    <path d="M440 255 H498" fill="none" stroke="#0f766e" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="500" y="215" width="120" height="80" rx="10" fill="#1d4ed8"/>
+    <text x="560" y="250" text-anchor="middle" font-weight="700" fill="#ffffff">LOAD</text>
+    <text x="560" y="268" text-anchor="middle" font-weight="700" fill="#ffffff">BALANCER</text>
+
+    <g fill="none" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M620 240 C660 240 660 130 698 130"/>
+      <path d="M620 255 H698"/>
+      <path d="M620 270 C660 270 660 380 698 380"/>
+    </g>
+
+    <g fill="#ffffff" stroke="#1d4ed8" stroke-width="2">
+      <rect x="700" y="100" width="130" height="60" rx="8"/>
+      <rect x="700" y="225" width="130" height="60" rx="8"/>
+      <rect x="700" y="350" width="130" height="60" rx="8"/>
+    </g>
+    <text x="718" y="126" font-weight="700">web-01</text><text x="718" y="146" fill="#4b6470">200 OK · 182 ms</text>
+    <text x="718" y="251" font-weight="700">web-02</text><text x="718" y="271" fill="#4b6470">200 OK · 176 ms</text>
+    <text x="718" y="376" font-weight="700">web-03</text><text x="718" y="396" fill="#4b6470">200 OK · 410 ms</text>
+
+    <g fill="none" stroke="#4b6470" stroke-width="2" stroke-dasharray="6 5">
+      <path d="M765 160 V200 H880 V440"/>
+      <path d="M830 255 H880"/>
+      <path d="M765 410 V440 H880"/>
+    </g>
+    <ellipse cx="880" cy="452" rx="44" ry="12" fill="#0b2530"/>
+    <rect x="836" y="452" width="88" height="46" fill="#0b2530"/>
+    <ellipse cx="880" cy="498" rx="44" ry="12" fill="#0b2530"/>
+    <text x="880" y="482" text-anchor="middle" font-weight="700" fill="#ffffff">DB</text>
+
+    <circle cx="830" cy="350" r="13" fill="#e8a33d"/>
+    <text x="830" y="355" text-anchor="middle" font-weight="700" fill="#0b2530">!</text>
+    <text x="700" y="468" fill="#9a5b06" font-weight="700">Slow response alert</text>
+
+    <rect x="40" y="470" width="420" height="44" rx="8" fill="#ffffff" stroke="#c9dde5"/>
+    <text x="58" y="497" fill="#4b6470">HFH monitor <tspan font-weight="700" fill="#0b2530">MON-2026-117</tspan> · availability this month 99.97%</text>
+  </g>
+</svg>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Example availability report · HFH Network Services</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/hfh.css">
+  <script src="assets/js/ui-helper.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <p class="demo-note">Fictional company. Lookyloo training demo. <span data-session>Client portal</span></p>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="./"><img src="assets/img/logo.svg" alt="HFH Network Services" width="232" height="48"></a>
+      <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">Menu</button>
+      <nav id="site-menu" class="site-menu" aria-label="Main">
+        <a href="./#services">Services</a>
+        <a href="./#plans">Plans</a>
+        <a href="report.html" aria-current="page">Example report</a>
+        <a href="./#faq">FAQ</a>
+        <a class="button" href="./#contact">Book a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="report-head">
+      <div class="wrap">
+        <p class="eyebrow">Example monthly report · September 2026</p>
+        <h1>Brightmoor Outdoor web shop</h1>
+        <p>Sample report for a fictional customer on the Business plan. 12 monitors, checked every 30 seconds from Frankfurt, Amsterdam, Warsaw and Madrid.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="kpis">
+        <div class="kpi"><span>Availability</span><strong>99.97%</strong><small>Target 99.9%</small></div>
+        <div class="kpi"><span>Downtime</span><strong>13 min</strong><small>1 incident</small></div>
+        <div class="kpi"><span>Median response</span><strong>167 ms</strong><small>August: 171 ms</small></div>
+        <div class="kpi"><span>Alerts sent</span><strong>3</strong><small>0 false alarms</small></div>
+      </div>
+
+      <section class="chart">
+        <h2>Daily median response time, checkout page</h2>
+        <p>Milliseconds, all locations combined. Hover a point for the exact value.</p>
+        <svg viewBox="0 0 720 264" role="img" aria-label="Line chart of daily median response time in September 2026. Steady between 157 and 176 ms, rising to 248 ms on 19 September and 312 ms on 20 September, back to 189 ms on 21 September.">
+          <g class="axis">
+            <line class="gridline" x1="56" x2="700" y1="236" y2="236"/><text x="48" y="240" text-anchor="end">0</text>
+            <line class="gridline" x1="56" x2="700" y1="181" y2="181"/><text x="48" y="185" text-anchor="end">100</text>
+            <line class="gridline" x1="56" x2="700" y1="126" y2="126"/><text x="48" y="130" text-anchor="end">200</text>
+            <line class="gridline" x1="56" x2="700" y1="71" y2="71"/><text x="48" y="75" text-anchor="end">300</text>
+            <line class="gridline" x1="56" x2="700" y1="16" y2="16"/><text x="48" y="20" text-anchor="end">400</text>
+            <text x="56" y="256" text-anchor="middle">1 Sep</text>
+            <text x="211" y="256" text-anchor="middle">8 Sep</text>
+            <text x="367" y="256" text-anchor="middle">15 Sep</text>
+            <text x="522" y="256" text-anchor="middle">22 Sep</text>
+            <text x="678" y="256" text-anchor="middle">29 Sep</text>
+          </g>
+          <line class="threshold" x1="56" x2="700" y1="71" y2="71"/>
+          <text class="threshold-label" x="700" y="64" text-anchor="end">Alert threshold 300 ms</text>
+          <polyline class="series" points="56.0,146.9 78.2,149.1 100.4,145.2 122.6,141.9 144.8,143.1 167.0,148.0 189.2,149.7 211.4,146.3 233.7,144.7 255.9,141.4 278.1,139.8 300.3,142.5 322.5,143.6 344.7,145.8 366.9,147.4 389.1,148.6 411.3,144.7 433.5,140.3 455.7,99.6 477.9,64.4 500.1,132.1 522.3,140.8 544.6,143.1 566.8,144.7 589.0,146.3 611.2,141.9 633.4,139.2 655.6,142.5 677.8,144.2 700.0,145.2"/>
+          <circle class="point" cx="56.0" cy="146.9" r="4"><title>1 September: 162 ms</title></circle>
+          <circle class="point" cx="78.2" cy="149.1" r="4"><title>2 September: 158 ms</title></circle>
+          <circle class="point" cx="100.4" cy="145.2" r="4"><title>3 September: 165 ms</title></circle>
+          <circle class="point" cx="122.6" cy="141.9" r="4"><title>4 September: 171 ms</title></circle>
+          <circle class="point" cx="144.8" cy="143.1" r="4"><title>5 September: 169 ms</title></circle>
+          <circle class="point" cx="167.0" cy="148.0" r="4"><title>6 September: 160 ms</title></circle>
+          <circle class="point" cx="189.2" cy="149.7" r="4"><title>7 September: 157 ms</title></circle>
+          <circle class="point" cx="211.4" cy="146.3" r="4"><title>8 September: 163 ms</title></circle>
+          <circle class="point" cx="233.7" cy="144.7" r="4"><title>9 September: 166 ms</title></circle>
+          <circle class="point" cx="255.9" cy="141.4" r="4"><title>10 September: 172 ms</title></circle>
+          <circle class="point" cx="278.1" cy="139.8" r="4"><title>11 September: 175 ms</title></circle>
+          <circle class="point" cx="300.3" cy="142.5" r="4"><title>12 September: 170 ms</title></circle>
+          <circle class="point" cx="322.5" cy="143.6" r="4"><title>13 September: 168 ms</title></circle>
+          <circle class="point" cx="344.7" cy="145.8" r="4"><title>14 September: 164 ms</title></circle>
+          <circle class="point" cx="366.9" cy="147.4" r="4"><title>15 September: 161 ms</title></circle>
+          <circle class="point" cx="389.1" cy="148.6" r="4"><title>16 September: 159 ms</title></circle>
+          <circle class="point" cx="411.3" cy="144.7" r="4"><title>17 September: 166 ms</title></circle>
+          <circle class="point" cx="433.5" cy="140.3" r="4"><title>18 September: 174 ms</title></circle>
+          <circle class="point" cx="455.7" cy="99.6" r="4"><title>19 September: 248 ms</title></circle>
+          <circle class="point" cx="477.9" cy="64.4" r="4"><title>20 September: 312 ms</title></circle>
+          <circle class="point" cx="500.1" cy="132.1" r="4"><title>21 September: 189 ms</title></circle>
+          <circle class="point" cx="522.3" cy="140.8" r="4"><title>22 September: 173 ms</title></circle>
+          <circle class="point" cx="544.6" cy="143.1" r="4"><title>23 September: 169 ms</title></circle>
+          <circle class="point" cx="566.8" cy="144.7" r="4"><title>24 September: 166 ms</title></circle>
+          <circle class="point" cx="589.0" cy="146.3" r="4"><title>25 September: 163 ms</title></circle>
+          <circle class="point" cx="611.2" cy="141.9" r="4"><title>26 September: 171 ms</title></circle>
+          <circle class="point" cx="633.4" cy="139.2" r="4"><title>27 September: 176 ms</title></circle>
+          <circle class="point" cx="655.6" cy="142.5" r="4"><title>28 September: 170 ms</title></circle>
+          <circle class="point" cx="677.8" cy="144.2" r="4"><title>29 September: 167 ms</title></circle>
+          <circle class="point" cx="700.0" cy="145.2" r="4"><title>30 September: 165 ms</title></circle>
+        </svg>
+      </section>
+
+      <section class="chart">
+        <h2>Median response time by probe location</h2>
+        <p>Milliseconds, September 2026.</p>
+        <svg viewBox="0 0 720 170" role="img" aria-label="Bar chart: Frankfurt 158 ms, Amsterdam 164 ms, Warsaw 183 ms, Madrid 196 ms.">
+          <text class="bar-label" x="0" y="28">Frankfurt</text>
+          <rect class="bar" x="120" y="10" width="329" height="26" rx="4"><title>Frankfurt: 158 ms</title></rect>
+          <text class="bar-value" x="457" y="28">158</text>
+          <text class="bar-label" x="0" y="68">Amsterdam</text>
+          <rect class="bar" x="120" y="50" width="341" height="26" rx="4"><title>Amsterdam: 164 ms</title></rect>
+          <text class="bar-value" x="469" y="68">164</text>
+          <text class="bar-label" x="0" y="108">Warsaw</text>
+          <rect class="bar" x="120" y="90" width="381" height="26" rx="4"><title>Warsaw: 183 ms</title></rect>
+          <text class="bar-value" x="509" y="108">183</text>
+          <text class="bar-label" x="0" y="148">Madrid</text>
+          <rect class="bar" x="120" y="130" width="408" height="26" rx="4"><title>Madrid: 196 ms</title></rect>
+          <text class="bar-value" x="536" y="148">196</text>
+        </svg>
+      </section>
+
+      <section>
+        <h2>Incidents and alerts</h2>
+        <table class="report-table">
+          <thead>
+            <tr><th>Date</th><th>Monitor</th><th>Event</th><th>Root cause</th><th class="num">Duration</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>19 Sep, 21:40</td><td>Checkout page</td><td>Slow response warning</td><td>Payment provider latency</td><td class="num">2 h 05 min</td></tr>
+            <tr><td>20 Sep, 02:14</td><td>Checkout page</td><td>Down, 503 from 4 of 4 locations</td><td>Failed deployment on web-03</td><td class="num">13 min</td></tr>
+            <tr><td>27 Sep, 09:00</td><td>shop certificate</td><td>Expires in 14 days</td><td>Renewal job disabled</td><td class="num">Resolved same day</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Recommendations</h2>
+        <table class="report-table">
+          <tbody>
+            <tr><td>Add a health check to the deployment pipeline so a failing node is removed from the load balancer automatically.</td></tr>
+            <tr><td>Set a response time warning at 250 ms on the checkout page to catch payment provider slowdowns earlier.</td></tr>
+            <tr><td>Re-enable automatic certificate renewal and keep the 14-day expiry alert as a safety net.</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 HFH Network Services. Fictional company created for Lookyloo training.</span>
+      <span><a href="./">Home</a> · <a href="./#contact">Contact</a></span>
+    </div>
+  </footer>
+</body>
+</html>

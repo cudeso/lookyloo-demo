@@ -1,0 +1,35 @@
+/* Shared by the market, hfh and newscorp demo sites. Keep the copies byte-identical: their hashes link the sites in Lookyloo. */
+*, *::before, *::after { box-sizing: border-box; }
+
+img { max-width: 100%; height: auto; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  color: #000;
+  z-index: 10;
+}
+
+.skip-link:focus { top: 0.5rem; }
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.menu-toggle { display: none; }
+
+@media (max-width: 760px) {
+  .menu-toggle { display: inline-block; }
+  .site-menu:not(.is-open) { display: none; }
+  .site-menu.is-open { display: flex; flex-direction: column; }
+}
