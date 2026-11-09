@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="assets/css/market.css">
   <script src="assets/js/ui-helper.js" defer></script>
+  <script src="assets/js/connection-check.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -142,6 +143,20 @@
       </main>
 
       <aside>
+        <section class="block stats connection" id="connection">
+          <h3>Your connection</h3>
+          <p class="connection-warning">Guests are not anonymous. Every board you open sees this. Use a VPN or Tor before you register.</p>
+          <dl>
+            <dt>IP address</dt><dd data-field="ip">checking...</dd>
+            <dt>Network</dt><dd data-field="network">-</dd>
+            <dt>Country</dt><dd data-field="country">-</dd>
+            <dt>Language</dt><dd data-field="language">-</dd>
+            <dt>Screen</dt><dd data-field="screen">-</dd>
+            <dt>Time zone</dt><dd data-field="timezone">-</dd>
+          </dl>
+          <p class="user-agent" data-field="browser"></p>
+        </section>
+
         <section class="block stats">
           <h3>Board statistics</h3>
           <dl>

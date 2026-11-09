@@ -173,6 +173,10 @@ tr:nth-child(even) td { background: #1b1918; }
 
 .online { padding: 8px 10px; }
 
+.connection-warning { color: #f2b25c; }
+.connection dd { overflow-wrap: anywhere; }
+.connection .user-agent { padding-top: 0; color: var(--muted); font: 10px/1.4 var(--mono); overflow-wrap: anywhere; }
+
 .side-ad { padding: 10px 0; text-align: center; }
 
 .site-footer {

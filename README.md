@@ -77,7 +77,7 @@ The fonts are unmodified copies of openly licensed fonts, with each licence file
 
 ## External resource on NewsCorp
 
-NewsCorp loads the Bootstrap 4.2.1 grid (MIT) directly from an external site and uses it for its page layout. The URL is in the `link` tag of each NewsCorp page. This is the only third-party request on the demo pages, apart from the end of the HFH redirect chain below. On 20 October 2026 it returned `200`, `text/css` and 48,488 bytes with the hash above.
+NewsCorp loads the Bootstrap 4.2.1 grid (MIT) directly from an external site and uses it for its page layout. The URL is in the `link` tag of each NewsCorp page. Apart from the Market IP lookup and the end of the HFH redirect chain below, this is the only third-party request on the demo pages. On 20 October 2026 it returned `200`, `text/css` and 48,488 bytes with the hash above.
 
 If you capture both NewsCorp and the site that hosts the file, the same URL and hash appear in both trees. That only shows NewsCorp links to a public file on that site. **It does not mean the owner of that site operates or endorses any demo site.** It is a useful counter-example: a matching resource often just comes from a common library.
 
@@ -87,6 +87,14 @@ If the file changes or disappears, the NewsCorp layout breaks and the hash no lo
 url=$(grep -o 'https://[^"]*bootstrap-grid.min.css' sites/newscorp/index.html)
 curl -s "$url" | sha256sum
 ```
+
+## IP lookup on Market
+
+The Market homepage has a "Your connection" box in the sidebar. `assets/js/connection-check.js`, which only Market uses, fetches `https://ipinfo.io/json` after the page loads and shows the IP address, network and country it returns. The language, screen size, time zone and user agent come from the browser itself and need no request.
+
+In a capture, expect a `GET` to `ipinfo.io` under the Market page that returns JSON. The screenshot shows the public address of the capture browser, or of the proxy if the capture uses one, so capturing with and without a proxy gives two different results. If the lookup fails, the box says "lookup failed" and the rest of the page is unaffected.
+
+`ipinfo.io` is a live service used without an API key, which is rate-limited. The capture browser needs internet access.
 
 ## Redirect chain on HFH
 
@@ -117,11 +125,12 @@ These are what the sites are built to show. They have not been checked against a
 | Where to look | What you should see | What it means |
 | --- | --- | --- |
 | Screenshots | Three pages that look nothing alike. | Appearance gives no hint of a link. |
-| Capture tree | One host per demo site, plus the Bootstrap host on NewsCorp. | No request connects the demo sites to each other. |
+| Capture tree | One host per demo site, plus `ipinfo.io` on Market and the Bootstrap host on NewsCorp. | No request connects the demo sites to each other. |
 | `common.css`, `ui-helper.js` | The same hash in all three captures. | The sites share code. A lead, not proof. |
 | `badge-verified.svg` | The same hash on Market and NewsCorp. | An image copied between sites. |
 | `europe-outage-monitoring.svg` | The same hash as HFH's `network-topology.svg`. | Content matches despite a different name and path. |
 | `bootstrap-grid.min.css` | The same URL and hash on NewsCorp and the site that hosts it. | A shared third-party file. Weak evidence. |
+| `ipinfo.io` on Market | A cross-origin request that returns JSON. | The page tells a third party who visited. |
 | URL node for `/` | `Set-Cookie` and `X-Demo-Site`. | A server-set, host-only cookie. |
 | `/api/session.json` | The request sends the homepage cookie. | The cookie is used on a later request. |
 
