@@ -9,14 +9,14 @@ All names, people, companies, listings and data are invented. Each site shows a 
 | Site | Document root | Public URL | Entry pages |
 | --- | --- | --- | --- |
 | Ashmarket (forum) | `sites/market/` | `https://market.internetpolice.com/` | `/`, `/thread.html`, `/login.html`, `/rules.html` |
-| HFH Network Services (website monitoring) | `sites/hfh/` | `https://hfh.internetpolice.com/` | `/`, `/report.html` |
+| HFH Network Services (website monitoring) | `sites/hfh/` | `https://hfh.internetpolice.com/` | `/`, `/report.html`, `/services` (redirect) |
 | The Northline Dispatch (news) | `sites/newscorp/` | `https://newscorp.internetpolice.com/` | `/`, `/outage-monitoring.html`, `/forum-reputation.html` |
 
 All site paths are relative.
 
 ## Running the server
 
-One script serves all three sites and picks the document root from the `Host` header.
+One script serves all the sites and picks the document root from the `Host` header.
 
 ```bash
 python3 server.py
@@ -61,7 +61,7 @@ Each site serves its own copy of these files. No page loads anything from anothe
 | `/assets/js/ui-helper.js` | Market, HFH, NewsCorp | `34bd9ef2b5642a48b9b833c6d314e2677420f31115282215a2183ec82321125f` |
 | `/assets/img/badge-verified.svg` | Market, NewsCorp | `e6e170496721d014cf2a8b3ac65fd33f0c07d72847fbb5ab1c687e74f36254f5` |
 | `/assets/img/network-topology.svg` (HFH), `/assets/img/stories/europe-outage-monitoring.svg` (NewsCorp) | HFH, NewsCorp | `a1a3858d0367f593a32b2f3bf660f6ccf1e742811ea22752f57bde40af454619` |
-| Bootstrap 4.2.1 grid from `www.tools4leas.eu` (see below) | NewsCorp | `e6d573b7daafdee530dc4204ffb40f9bd192b3f65ed11a0bf02b18b909bca8a8` |
+| Bootstrap 4.2.1 grid from an external site (see below) | NewsCorp | `e6d573b7daafdee530dc4204ffb40f9bd192b3f65ed11a0bf02b18b909bca8a8` |
 
 ### Fonts and background images
 
@@ -77,16 +77,29 @@ The fonts are unmodified copies of openly licensed fonts, with each licence file
 
 ## External resource on NewsCorp
 
-NewsCorp loads the Bootstrap 4.2.1 grid (MIT) directly from `https://www.tools4leas.eu/assets/bootstrap/css/bootstrap-grid.min.css` and uses it for its page layout. This is the only third-party request in the demo. On 20 October 2026 it returned `200`, `text/css` and 48,488 bytes with the hash above.
+NewsCorp loads the Bootstrap 4.2.1 grid (MIT) directly from an external site and uses it for its page layout. The URL is in the `link` tag of each NewsCorp page. This is the only third-party request on the demo pages, apart from the end of the HFH redirect chain below. On 20 October 2026 it returned `200`, `text/css` and 48,488 bytes with the hash above.
 
-If you capture both NewsCorp and `https://www.tools4leas.eu/`, the same URL and hash appear in both trees. That only shows NewsCorp links to a public file hosted by Tools4LEAs. **It does not mean Tools4LEAs owns, operates or endorses any demo site.** It is a useful counter-example: a matching resource often just comes from a common library.
+If you capture both NewsCorp and the site that hosts the file, the same URL and hash appear in both trees. That only shows NewsCorp links to a public file on that site. **It does not mean the owner of that site operates or endorses any demo site.** It is a useful counter-example: a matching resource often just comes from a common library.
 
 If the file changes or disappears, the NewsCorp layout breaks and the hash no longer matches. Check it before presenting:
 
 ```bash
-curl -s https://www.tools4leas.eu/assets/bootstrap/css/bootstrap-grid.min.css | sha256sum
-curl -s https://www.tools4leas.eu/ | grep bootstrap-grid
+url=$(grep -o 'https://[^"]*bootstrap-grid.min.css' sites/newscorp/index.html)
+curl -s "$url" | sha256sum
 ```
+
+## Redirect chain on HFH
+
+Capture `http://hfh.internetpolice.com/services` on its own to show how Lookyloo follows redirects. `server.py` answers both hops with a real `302`, so there are no `services.html` or `external.html` files.
+
+| Request | Response |
+| --- | --- |
+| `/services` | `302`, `Location: /external` |
+| `/external` | `302`, `Location: https://www.cudeso.be/` |
+
+Expected in Lookyloo, not yet checked in a capture: the tree starts on `hfh.internetpolice.com` and continues on `www.cudeso.be`, with all three URLs listed as the redirect chain. The two HFH responses carry `X-Demo-Site: hfh` and no cookie.
+
+`www.cudeso.be` is a live site, so the capture browser needs internet access, and the resources it loads can change between captures.
 
 ## Presenting with Lookyloo
 
@@ -95,7 +108,7 @@ Capture these in order and let indexing finish before looking for correlations:
 1. `https://market.internetpolice.com/`
 2. `https://hfh.internetpolice.com/`
 3. `https://newscorp.internetpolice.com/`
-4. `https://www.tools4leas.eu/`
+4. The site that hosts the Bootstrap file
 
 ### Expected findings
 
@@ -104,11 +117,11 @@ These are what the sites are built to show. They have not been checked against a
 | Where to look | What you should see | What it means |
 | --- | --- | --- |
 | Screenshots | Three pages that look nothing alike. | Appearance gives no hint of a link. |
-| Capture tree | One host per demo site, plus `www.tools4leas.eu` on NewsCorp. | No request connects the demo sites to each other. |
+| Capture tree | One host per demo site, plus the Bootstrap host on NewsCorp. | No request connects the demo sites to each other. |
 | `common.css`, `ui-helper.js` | The same hash in all three captures. | The sites share code. A lead, not proof. |
 | `badge-verified.svg` | The same hash on Market and NewsCorp. | An image copied between sites. |
 | `europe-outage-monitoring.svg` | The same hash as HFH's `network-topology.svg`. | Content matches despite a different name and path. |
-| `bootstrap-grid.min.css` | The same URL and hash on NewsCorp and Tools4LEAs. | A shared third-party file. Weak evidence. |
+| `bootstrap-grid.min.css` | The same URL and hash on NewsCorp and the site that hosts it. | A shared third-party file. Weak evidence. |
 | URL node for `/` | `Set-Cookie` and `X-Demo-Site`. | A server-set, host-only cookie. |
 | `/api/session.json` | The request sends the homepage cookie. | The cookie is used on a later request. |
 

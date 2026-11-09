@@ -19,7 +19,14 @@ HOMEPAGE_COOKIES = {
     "hfh": "hfh_visitor=v-20261020-0815",
     "newscorp": "nld_reader=reader-0042",
 }
-HOSTS = {f"{site}.{BASE_DOMAIN}": site for site in HOMEPAGE_COOKIES}
+SITES = (*HOMEPAGE_COOKIES, "tools4leas")
+HOSTS = {f"{site}.{BASE_DOMAIN}": site for site in SITES}
+
+# Redirect chain for the HFH demo. 302 rather than 301, so a browser does not cache a hop between captures.
+REDIRECTS = {
+    ("hfh", "/services"): "/external",
+    ("hfh", "/external"): "https://www.cudeso.be/",
+}
 
 
 class DemoHandler(SimpleHTTPRequestHandler):
@@ -31,18 +38,20 @@ class DemoHandler(SimpleHTTPRequestHandler):
         ".svg": "image/svg+xml",
         ".ico": "image/x-icon",
         ".png": "image/png",
+        ".jpeg": "image/jpeg",
         ".ttf": "font/ttf",
         ".otf": "font/otf",
+        ".woff2": "font/woff2",
         ".txt": "text/plain; charset=utf-8",
     }
     site = None
 
     def do_GET(self):
-        if self.select_site():
+        if self.select_site() and not self.send_redirect():
             super().do_GET()
 
     def do_HEAD(self):
-        if self.select_site():
+        if self.select_site() and not self.send_redirect():
             super().do_HEAD()
 
     def select_site(self):
@@ -54,10 +63,20 @@ class DemoHandler(SimpleHTTPRequestHandler):
         self.directory = str(SITES_DIR / self.site)
         return True
 
+    def send_redirect(self):
+        target = REDIRECTS.get((self.site, urlsplit(self.path).path))
+        if target is None:
+            return False
+        self.send_response(302)
+        self.send_header("Location", target)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+        return True
+
     def end_headers(self):
         if self.site:
             self.send_header("X-Demo-Site", self.site)
-            if urlsplit(self.path).path in ("/", "/index.html"):
+            if self.site in HOMEPAGE_COOKIES and urlsplit(self.path).path in ("/", "/index.html"):
                 self.send_header("Set-Cookie", f"{HOMEPAGE_COOKIES[self.site]}; Path=/; HttpOnly; SameSite=Lax")
         super().end_headers()
 
