@@ -1,6 +1,6 @@
 # Lookyloo demo sites
 
-Three fictional websites for demonstrating website analysis with [Lookyloo](https://github.com/Lookyloo/lookyloo/). They look unrelated: an underground forum, a website-monitoring company and a news publication. They deliberately serve some byte-identical files, so a capture of each can be linked through matching resource hashes.
+Four fictional websites for demonstrating website analysis with [Lookyloo](https://github.com/Lookyloo/lookyloo/). They look unrelated: an underground forum, a website-monitoring company and two news sites. They deliberately serve some byte-identical files, so captures can be linked through matching resource hashes.
 
 All names, people, companies, listings and data are invented. Each site shows a visible demo notice. No form sends or stores anything.
 
@@ -11,6 +11,7 @@ All names, people, companies, listings and data are invented. Each site shows a 
 | Ashmarket (forum) | `sites/market/` | `https://market.internetpolice.com/` | `/`, `/thread.html`, `/login.html`, `/rules.html` |
 | HFH Network Services (website monitoring) | `sites/hfh/` | `https://hfh.internetpolice.com/` | `/`, `/report.html`, `/services` (redirect) |
 | The Northline Dispatch (news) | `sites/newscorp/` | `https://newscorp.internetpolice.com/` | `/`, `/outage-monitoring.html`, `/forum-reputation.html` |
+| PrimeNews (news) | `sites/primenews/` | `https://primenews.internetpolice.com/` | `/`, `/web-shops-monitoring.html`, `/forum-badges.html` |
 
 All site paths are relative.
 
@@ -26,7 +27,7 @@ Settings are at the top of `server.py` and can be overridden with environment va
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `DEMO_BASE_DOMAIN` | `internetpolice.com` | Sites answer on `market.`, `hfh.` and `newscorp.` under this domain. This is the only place the domain is configured. |
+| `DEMO_BASE_DOMAIN` | `internetpolice.com` | Sites answer on `market.`, `hfh.`, `newscorp.` and `primenews.` under this domain. This is the only place the domain is configured. |
 | `DEMO_BIND` | `127.0.0.1` | Listen address. Keep the default behind a reverse proxy. |
 | `DEMO_PORT` | `8000` | Listen port. |
 
@@ -34,7 +35,7 @@ Requests for any other hostname get a `404`. Directory listings are disabled.
 
 ## Deployment
 
-1. Create DNS records for `market`, `hfh` and `newscorp` under the chosen domain, pointing at the server or add the entries to the hosts file (of the Lookyloo host and your workstation)
+1. Create DNS records for `market`, `hfh`, `newscorp` and `primenews` under the chosen domain, pointing at the server or add the entries to the hosts file (of the Lookyloo host and your workstation)
 2. Run `python3 server.py`. If you bind to port 80 then you will have to use sudo.
 
 ## Headers, cookies and the JSON request
@@ -46,6 +47,8 @@ Requests for any other hostname get a `404`. Directory listings are disabled.
 | Market | `market` | `ash_guest=guest-4471` |
 | HFH | `hfh` | `hfh_visitor=v-20261020-0815` |
 | NewsCorp | `newscorp` | `nld_reader=reader-0042` |
+
+PrimeNews gets `X-Demo-Site: primenews` and no cookie.
 
 The cookies use `Path=/; HttpOnly; SameSite=Lax` without a `Domain`, so each one stays on its own subdomain. They have no `Secure` flag, so they also work over plain HTTP.
 
@@ -61,7 +64,9 @@ Each site serves its own copy of these files. No page loads anything from anothe
 | `/assets/js/ui-helper.js` | Market, HFH, NewsCorp | `34bd9ef2b5642a48b9b833c6d314e2677420f31115282215a2183ec82321125f` |
 | `/assets/img/badge-verified.svg` | Market, NewsCorp | `e6e170496721d014cf2a8b3ac65fd33f0c07d72847fbb5ab1c687e74f36254f5` |
 | `/assets/img/network-topology.svg` (HFH), `/assets/img/stories/europe-outage-monitoring.svg` (NewsCorp) | HFH, NewsCorp | `a1a3858d0367f593a32b2f3bf660f6ccf1e742811ea22752f57bde40af454619` |
-| Bootstrap 4.2.1 grid from an external site (see below) | NewsCorp | `e6d573b7daafdee530dc4204ffb40f9bd192b3f65ed11a0bf02b18b909bca8a8` |
+| `/assets/img/stories/cloud-contracts.svg` (NewsCorp), `/assets/media/cloud-suppliers.svg` (PrimeNews) | NewsCorp, PrimeNews | `6452570bdef7bfb4d31d7cc930a01100782846b7df4a6f71c95793e891da485b` |
+| `/assets/img/stories/council-chamber.svg` (NewsCorp), `/assets/media/ministers-meeting.svg` (PrimeNews) | NewsCorp, PrimeNews | `213b58195e7b13d0017dfdb45507a3979bae67ca0bb04d96447b571208f5424a` |
+| Bootstrap 4.2.1 grid from an external site (see below) | NewsCorp, PrimeNews | `e6d573b7daafdee530dc4204ffb40f9bd192b3f65ed11a0bf02b18b909bca8a8` |
 
 ### Fonts and background images
 
@@ -72,12 +77,13 @@ Each site stylesheet loads its own font and background image. The stylesheet is 
 | Market | `market.css` | `Go-Mono.ttf` | `bg-mesh.svg` |
 | HFH | `hfh.css` | `Inter-ExtraBold.otf` | `hero-dots.svg` |
 | NewsCorp | `newscorp.css` | `EBGaramond12-Bold.ttf` | `compass-rose.svg` (hidden on narrow screens) |
+| PrimeNews | `primenews.css` | `PTSansNarrow-Bold.ttf` | None |
 
 The fonts are unmodified copies of openly licensed fonts, with each licence file next to its font.
 
 ## External resource on NewsCorp
 
-NewsCorp loads the Bootstrap 4.2.1 grid (MIT) directly from an external site and uses it for its page layout. The URL is in the `link` tag of each NewsCorp page. Apart from the Market IP lookup and the end of the HFH redirect chain below, this is the only third-party request on the demo pages. On 20 October 2026 it returned `200`, `text/css` and 48,488 bytes with the hash above.
+NewsCorp loads the Bootstrap 4.2.1 grid (MIT) directly from an external site and uses it for its page layout. The URL is in the `link` tag of each NewsCorp page. PrimeNews loads the same file. The other third-party requests are the PrimeNews libraries, the Market IP lookup and the end of the HFH redirect chain, all described below. On 20 October 2026 it returned `200`, `text/css` and 48,488 bytes with the hash above.
 
 If you capture both NewsCorp and the site that hosts the file, the same URL and hash appear in both trees. That only shows NewsCorp links to a public file on that site. **It does not mean the owner of that site operates or endorses any demo site.** It is a useful counter-example: a matching resource often just comes from a common library.
 
@@ -87,6 +93,33 @@ If the file changes or disappears, the NewsCorp layout breaks and the hash no lo
 url=$(grep -o 'https://[^"]*bootstrap-grid.min.css' sites/newscorp/index.html)
 curl -s "$url" | sha256sum
 ```
+
+## Disinformation pair: NewsCorp and PrimeNews
+
+PrimeNews is a tabloid-style site that republishes the NewsCorp articles under its own design. Use the pair to show how an investigation into coordinated inauthentic content can start: two sites that look different carry the same stories, so what else do they have in common?
+
+Capture `https://newscorp.internetpolice.com/` and `https://primenews.internetpolice.com/`. To compare a single story, also capture `/forum-reputation.html` on NewsCorp and `/forum-badges.html` on PrimeNews.
+
+| Clue | NewsCorp | PrimeNews | What it means |
+| --- | --- | --- | --- |
+| Article text | Original, with named reporters | The same headlines and article bodies word for word, credited to "PrimeNews staff" | Copied content. The copied outage article still says Clara Ostendorf writes "for this newspaper". |
+| Article images | `assets/img/stories/cloud-contracts.svg`, `council-chamber.svg` | `assets/media/cloud-suppliers.svg`, `ministers-meeting.svg` | The same hashes under different names and paths. A strong lead that one site copied from the other. |
+| Bootstrap grid | Same external URL | Same external URL | A shared third-party file. Weak evidence. |
+| jQuery 3.7.1 and Bootstrap 5.3.3 JavaScript | Not loaded | From cdnjs and jsDelivr | Common public libraries. They show what PrimeNews depends on, not who runs it. |
+| Design, font and favicon | Serif broadsheet, EB Garamond | Red and yellow tabloid, PT Sans Narrow | The look gives no hint of a link. |
+
+PrimeNews leaves out NewsCorp's `europe-outage-monitoring.svg` and `badge-verified.svg` on purpose, because those files also link NewsCorp to HFH and Market. It does not load `common.css` or `ui-helper.js` and sets no cookie, so it only connects to NewsCorp.
+
+After the page loads, `assets/js/primenews.js` uses jQuery to fetch `api/most-read.json` and fill the Most read list, so the tree shows a local JSON request made after the CDN scripts. On narrow screens the Sections menu uses Bootstrap's Collapse. It only opens on a click, but the script loads either way.
+
+Expected, not yet checked in a capture: the hashes of both image pairs and of the grid stylesheet match across the two captures. Matching text and files are reasons to look further. They do not show who operates either site.
+
+The CDN files are pinned versions. On 10 November 2026 they returned these hashes:
+
+| File | SHA-256 |
+| --- | --- |
+| `jquery.min.js` 3.7.1 | `fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a` |
+| `bootstrap.bundle.min.js` 5.3.3 | `0833b2e9c3a26c258476c46266e6877fc75218625162e0460be9a3a098a61c6c` |
 
 ## IP lookup on Market
 

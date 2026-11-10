@@ -1,0 +1,189 @@
+@font-face {
+  font-family: "PT Sans Narrow";
+  font-weight: 700;
+  src: url("../fonts/PTSansNarrow-Bold.ttf") format("truetype");
+}
+
+:root {
+  --red: #d0101a;
+  --dark-red: #9e0a12;
+  --yellow: #ffd400;
+  --ink: #111;
+  --grey: #5f5f5f;
+  --rule: #ddd;
+  --headline: "PT Sans Narrow", "Arial Narrow", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f2f2f2;
+  color: var(--ink);
+  font: 16px/1.5 Arial, "Liberation Sans", Helvetica, sans-serif;
+}
+
+a { color: inherit; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--headline);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: 8px; top: 8px; padding: 6px 10px; background: var(--yellow); }
+
+.demo-strip {
+  padding: 3px 12px;
+  background: var(--ink);
+  color: #bbb;
+  font-size: 12px;
+  text-align: center;
+}
+
+.masthead { background: var(--red); color: #fff; }
+.masthead .container { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 24px; padding-top: 10px; padding-bottom: 10px; }
+
+.brand {
+  font: 700 56px/1 var(--headline);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.brand span { color: var(--yellow); }
+
+.slogan { margin: 0; font-size: 14px; font-weight: bold; }
+
+.sections { background: var(--ink); }
+.sections .container { display: flex; flex-wrap: wrap; align-items: center; }
+
+.section-links { display: flex; flex-wrap: wrap; }
+
+.section-links a,
+.sections-toggle {
+  padding: 10px 14px;
+  color: #fff;
+  font: 700 18px/1 var(--headline);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.section-links a:hover,
+.section-links a[aria-current="page"] { background: var(--red); }
+
+.sections-toggle { display: none; border: 0; background: none; cursor: pointer; }
+
+.breaking {
+  padding: 8px 0;
+  background: var(--yellow);
+  font: 700 20px/1.2 var(--headline);
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 2px 7px;
+  background: var(--red);
+  color: #fff;
+  font: 700 14px/1.2 var(--headline);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.breaking .label { margin: 0 8px 0 0; background: var(--ink); }
+
+main { padding-top: 20px; padding-bottom: 32px; }
+
+.lead-story,
+.second-tier article,
+.wide-story,
+.article,
+.most-read,
+.read-next,
+.newsletter {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fff;
+  border-top: 4px solid var(--red);
+}
+
+.lead-story img { width: 100%; margin-bottom: 14px; }
+.lead-story h1 { font-size: 46px; }
+.lead-story p { margin: 10px 0 0; font-size: 18px; }
+
+.second-tier article { height: calc(100% - 20px); }
+.second-tier h2 { font-size: 28px; }
+.second-tier h2 a { text-decoration: none; }
+.second-tier h2 a:hover { color: var(--red); }
+.second-tier p { margin: 8px 0 0; }
+
+.wide-story { display: flex; gap: 16px; }
+.wide-story img { flex: 0 0 40%; width: 40%; }
+.wide-story h2 { font-size: 30px; }
+.wide-story p { margin: 8px 0 0; }
+
+.meta { color: var(--grey); font-size: 13px; }
+
+.stream-head {
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.stream { margin: 0 0 20px; padding: 0; list-style: none; background: #fff; }
+.stream li { display: flex; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--rule); }
+.stream .time { flex: 0 0 52px; color: var(--red); font: 700 18px/1.2 var(--headline); }
+.stream h3 { font-size: 22px; }
+.stream p { margin: 4px 0 0; font-size: 15px; }
+
+.most-read { background: var(--ink); color: #fff; border-top-color: var(--yellow); }
+.most-read h2,
+.read-next h2,
+.newsletter h2 { margin-bottom: 10px; font-size: 26px; text-transform: uppercase; }
+
+#most-read { margin: 0; padding: 0; list-style: none; counter-reset: rank; }
+#most-read li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #333; counter-increment: rank; font-weight: bold; }
+#most-read li::before { content: counter(rank); color: var(--yellow); font: 700 30px/1 var(--headline); }
+#most-read a { text-decoration: none; }
+#most-read a:hover { color: var(--yellow); }
+
+.read-next ul { margin: 0; padding-left: 18px; }
+.read-next li { margin-bottom: 8px; }
+
+.newsletter { background: var(--yellow); border-top-color: var(--ink); }
+.newsletter p { margin: 0 0 6px; }
+.newsletter-note { color: var(--grey); font-size: 13px; }
+
+.article h1 { font-size: 48px; }
+.standfirst { margin: 12px 0 4px; font-size: 20px; font-weight: bold; }
+.article-body { margin-top: 16px; font-size: 18px; }
+.article-body h2 { margin: 24px 0 8px; font-size: 30px; }
+.article-body blockquote {
+  margin: 20px 0;
+  padding: 10px 16px;
+  background: var(--yellow);
+  font: 700 26px/1.15 var(--headline);
+}
+
+.site-footer { padding: 18px 0; background: var(--ink); color: #bbb; font-size: 13px; }
+.site-footer p { margin: 0 0 6px; }
+
+/* The Bootstrap grid stylesheet has no component styles, so the Collapse states used by the menu are defined here. */
+@media (max-width: 767px) {
+  .sections-toggle { display: block; }
+  .section-links { flex-basis: 100%; flex-direction: column; }
+  .section-links:not(.show) { display: none; }
+  .collapsing { height: 0; overflow: hidden; transition: height 0.2s; }
+  .brand { font-size: 44px; }
+  .lead-story h1,
+  .article h1 { font-size: 36px; }
+  .wide-story { display: block; }
+  .wide-story img { width: 100%; margin-bottom: 12px; }
+  .second-tier article { height: auto; }
+}

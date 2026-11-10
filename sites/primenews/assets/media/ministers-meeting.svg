@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400">
+  <title>Illustration of a council building with flags</title>
+  <rect width="640" height="400" fill="#dfe4ea"/>
+  <rect y="300" width="640" height="100" fill="#c5ccd5"/>
+  <circle cx="520" cy="80" r="42" fill="#f1e9d6"/>
+  <g fill="#f7f5f0" stroke="#7a8796" stroke-width="2">
+    <path d="M150 140 L320 70 L490 140 Z"/>
+    <rect x="160" y="140" width="320" height="18"/>
+    <rect x="160" y="290" width="320" height="16"/>
+    <rect x="140" y="306" width="360" height="14"/>
+  </g>
+  <g fill="#f7f5f0" stroke="#7a8796" stroke-width="2">
+    <rect x="180" y="158" width="22" height="132"/>
+    <rect x="232" y="158" width="22" height="132"/>
+    <rect x="284" y="158" width="22" height="132"/>
+    <rect x="336" y="158" width="22" height="132"/>
+    <rect x="388" y="158" width="22" height="132"/>
+    <rect x="440" y="158" width="22" height="132"/>
+  </g>
+  <circle cx="320" cy="114" r="12" fill="none" stroke="#7a8796" stroke-width="2"/>
+  <g stroke="#4a5563" stroke-width="3">
+    <path d="M70 300 V150"/>
+    <path d="M110 300 V150"/>
+    <path d="M530 300 V150"/>
+    <path d="M570 300 V150"/>
+  </g>
+  <path d="M70 152 H104 V178 H70 Z" fill="#2f4b7c"/>
+  <path d="M110 152 H144 V178 H110 Z" fill="#9c3d2e"/>
+  <path d="M530 152 H564 V178 H530 Z" fill="#3f6b4f"/>
+  <path d="M570 152 H604 V178 H570 Z" fill="#c9a443"/>
+</svg>
