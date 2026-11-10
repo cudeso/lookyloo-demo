@@ -142,6 +142,8 @@ The time zone is not part of the HTTP request, so the server cannot see it. The 
 
 Capture `http://market.internetpolice.com/` twice: once with the default settings, and once with the capture's time zone set to `Europe/Minsk`, if your Lookyloo instance offers that setting. Expected, not yet checked in a capture: the second capture shows the page, then `/blocked` with status `403`, and a screenshot of the block page instead of the forum. The homepage cookie is still set, because `/` loads before the script runs.
 
+The browser has already started loading the forum's styles, images and scripts when the script switches page, so some of those requests show as aborted under `/`. The block page has inline styles and an empty favicon, so nothing loads beneath `/blocked`. If it loaded `market.css` again, Lookyloo attached that request under `region-check.js` and marked it as the rendered page instead of `/blocked`.
+
 `/blocked.html` is the same page served as a static file with `200`. Only `/blocked` returns `403`.
 
 ## Redirect chain on HFH

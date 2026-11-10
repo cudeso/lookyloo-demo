@@ -4,21 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>403 Forbidden · Ashmarket</title>
-  <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" href="assets/css/market.css">
+  <!-- Styles are inline and the favicon is empty, so /blocked loads nothing else. Otherwise Lookyloo can attach the block page's resources to the forum page it replaced. -->
+  <link rel="icon" href="data:,">
+  <style>
+    body { margin: 0; background: #161514; color: #d8d2c6; font: 12px/1.45 Verdana, "DejaVu Sans", Tahoma, sans-serif; }
+    .demo-bar { padding: 3px 12px; background: #0f0e0d; border-bottom: 1px solid #34302c; color: #8b8579; font-size: 11px; }
+    .demo-bar strong { color: #d9822b; font-weight: normal; }
+    .block { max-width: 460px; margin: 30px auto; background: #1f1d1b; border: 1px solid #34302c; }
+    .block h1 { margin: 0; padding: 6px 10px; background: linear-gradient(#2c2724, #221f1c); border-bottom: 1px solid #b23a26; color: #f0e6d4; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .block p { margin: 0; padding: 8px 10px; }
+  </style>
 </head>
 <body>
-  <div class="demo-bar">
-    <span><strong>Fictional forum. Lookyloo training demo.</strong> No real listings, users or data.</span>
-  </div>
-  <div class="wrap">
-    <main class="narrow">
-      <section class="block">
-        <h2>403 Forbidden</h2>
-        <p>Access from your region is not permitted. Ashmarket does not serve visitors from CIS countries.</p>
-        <p>Do not contact staff to ask for an exception. Requests through other channels will be ignored.</p>
-      </section>
-    </main>
-  </div>
+  <div class="demo-bar"><strong>Fictional forum. Lookyloo training demo.</strong> No real listings, users or data.</div>
+  <main class="block">
+    <h1>403 Forbidden</h1>
+    <p>Access from your region is not permitted. Ashmarket does not serve visitors from CIS countries.</p>
+    <p>Do not contact staff to ask for an exception. Requests through other channels will be ignored.</p>
+  </main>
 </body>
 </html>
