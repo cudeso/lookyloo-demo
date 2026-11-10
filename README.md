@@ -8,7 +8,7 @@ All names, people, companies, listings and data are invented. Each site shows a 
 
 | Site | Document root | Public URL | Entry pages |
 | --- | --- | --- | --- |
-| Ashmarket (forum) | `sites/market/` | `https://market.internetpolice.com/` | `/`, `/thread.html`, `/login.html`, `/rules.html` |
+| Ashmarket (forum) | `sites/market/` | `https://market.internetpolice.com/` | `/`, `/thread.html`, `/login.html`, `/rules.html`, `/blocked` (403) |
 | HFH Network Services (website monitoring) | `sites/hfh/` | `https://hfh.internetpolice.com/` | `/`, `/report.html`, `/services` (redirect) |
 | The Northline Dispatch (news) | `sites/newscorp/` | `https://newscorp.internetpolice.com/` | `/`, `/outage-monitoring.html`, `/forum-reputation.html` |
 | PrimeNews (news) | `sites/primenews/` | `https://primenews.internetpolice.com/` | `/`, `/web-shops-monitoring.html`, `/forum-badges.html` |
@@ -133,6 +133,16 @@ The Market homepage has a "Your connection" box in the sidebar. `assets/js/conne
 In a capture, expect a `GET` to `ipinfo.io` under the Market page that returns JSON. The screenshot shows the public address of the capture browser, or of the proxy if the capture uses one, so capturing with and without a proxy gives two different results. If the lookup fails, the box says "lookup failed" and the rest of the page is unaffected.
 
 `ipinfo.io` is a live service used without an API key, which is rate-limited. The capture browser needs internet access.
+
+## Time zone block on Market
+
+Every Market page first runs `assets/js/region-check.js`, before the page renders. If the browser reports the time zone `Europe/Minsk`, the script replaces the page with `/blocked`, and `server.py` answers that path with a real `403 Forbidden` and a block page. Any other time zone gets the normal forum. Use it to show that what a site serves can depend on the capture settings.
+
+The time zone is not part of the HTTP request, so the server cannot see it. The decision is made in the browser, which makes this a JavaScript redirect followed by a `403`, not a server-side block.
+
+Capture `http://market.internetpolice.com/` twice: once with the default settings, and once with the capture's time zone set to `Europe/Minsk`, if your Lookyloo instance offers that setting. Expected, not yet checked in a capture: the second capture shows the page, then `/blocked` with status `403`, and a screenshot of the block page instead of the forum. The homepage cookie is still set, because `/` loads before the script runs.
+
+`/blocked.html` is the same page served as a static file with `200`. Only `/blocked` returns `403`.
 
 ## Redirect chain on HFH
 

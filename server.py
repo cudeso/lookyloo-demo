@@ -28,6 +28,11 @@ REDIRECTS = {
     ("hfh", "/external"): "https://www.cudeso.be/",
 }
 
+# The browser's time zone never reaches the server, so Market's region-check.js decides and requests this path.
+FORBIDDEN = {
+    ("market", "/blocked"): "blocked.html",
+}
+
 
 class DemoHandler(SimpleHTTPRequestHandler):
     extensions_map = {
@@ -47,11 +52,11 @@ class DemoHandler(SimpleHTTPRequestHandler):
     site = None
 
     def do_GET(self):
-        if self.select_site() and not self.send_redirect():
+        if self.select_site() and not self.send_redirect() and not self.send_forbidden():
             super().do_GET()
 
     def do_HEAD(self):
-        if self.select_site() and not self.send_redirect():
+        if self.select_site() and not self.send_redirect() and not self.send_forbidden():
             super().do_HEAD()
 
     def select_site(self):
@@ -71,6 +76,19 @@ class DemoHandler(SimpleHTTPRequestHandler):
         self.send_header("Location", target)
         self.send_header("Content-Length", "0")
         self.end_headers()
+        return True
+
+    def send_forbidden(self):
+        page = FORBIDDEN.get((self.site, urlsplit(self.path).path))
+        if page is None:
+            return False
+        body = (SITES_DIR / self.site / page).read_bytes()
+        self.send_response(403)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        if self.command == "GET":
+            self.wfile.write(body)
         return True
 
     def end_headers(self):
