@@ -56,7 +56,7 @@ After the page loads, `ui-helper.js` fetches `/api/session.json` and shows its m
 
 ## Shared resources
 
-Each site serves its own copy of these files. No page loads anything from another demo subdomain.
+Each site serves its own copy of these files. The only request from one demo subdomain to another is the PrimeNews profiler, described under the disinformation pair.
 
 | Resource | Served by | SHA-256 |
 | --- | --- | --- |
@@ -66,6 +66,7 @@ Each site serves its own copy of these files. No page loads anything from anothe
 | `/assets/img/network-topology.svg` (HFH), `/assets/img/stories/europe-outage-monitoring.svg` (NewsCorp) | HFH, NewsCorp | `a1a3858d0367f593a32b2f3bf660f6ccf1e742811ea22752f57bde40af454619` |
 | `/assets/img/stories/cloud-contracts.svg` (NewsCorp), `/assets/media/cloud-suppliers.svg` (PrimeNews) | NewsCorp, PrimeNews | `6452570bdef7bfb4d31d7cc930a01100782846b7df4a6f71c95793e891da485b` |
 | `/assets/img/stories/council-chamber.svg` (NewsCorp), `/assets/media/ministers-meeting.svg` (PrimeNews) | NewsCorp, PrimeNews | `213b58195e7b13d0017dfdb45507a3979bae67ca0bb04d96447b571208f5424a` |
+| `/assets/js/profile-loader.js` | NewsCorp, PrimeNews | `4d613310e2b4d5a126f4cc640d96b3a9276277f17d4c18d82060365672942f21` |
 | Bootstrap 4.2.1 grid from an external site (see below) | NewsCorp, PrimeNews | `e6d573b7daafdee530dc4204ffb40f9bd192b3f65ed11a0bf02b18b909bca8a8` |
 
 ### Fonts and background images
@@ -105,10 +106,14 @@ Capture `https://newscorp.internetpolice.com/` and `https://primenews.internetpo
 | Article text | Original, with named reporters | The same headlines and article bodies word for word, credited to "PrimeNews staff" | Copied content. The copied outage article still says Clara Ostendorf writes "for this newspaper". |
 | Article images | `assets/img/stories/cloud-contracts.svg`, `council-chamber.svg` | `assets/media/cloud-suppliers.svg`, `ministers-meeting.svg` | The same hashes under different names and paths. A strong lead that one site copied from the other. |
 | Bootstrap grid | Same external URL | Same external URL | A shared third-party file. Weak evidence. |
+| `profile-loader.js` | Own copy | Own copy, same hash | The same helper script on both sites. |
+| `profiler.js` and its beacon | Loaded from its own host | Loaded from the NewsCorp host | A direct request from PrimeNews to NewsCorp, with the same tracking account `NLD-20431`. The strongest link between the two. |
 | jQuery 3.7.1 and Bootstrap 5.3.3 JavaScript | Not loaded | From cdnjs and jsDelivr | Common public libraries. They show what PrimeNews depends on, not who runs it. |
 | Design, font and favicon | Serif broadsheet, EB Garamond | Red and yellow tabloid, PT Sans Narrow | The look gives no hint of a link. |
 
 PrimeNews leaves out NewsCorp's `europe-outage-monitoring.svg` and `badge-verified.svg` on purpose, because those files also link NewsCorp to HFH and Market. It does not load `common.css` or `ui-helper.js` and sets no cookie, so it only connects to NewsCorp.
+
+On every page of both sites, `assets/js/profile-loader.js` adds a script tag for `assets/js/profiler.js` on the NewsCorp host. It derives that host from the current one, so it works locally and on the deployment domain. `profiler.js` then requests `/api/pixel.gif?account=NLD-20431&page=<path>` from NewsCorp, a 1×1 GIF. In a PrimeNews capture, expect `newscorp.internetpolice.com` in the tree with the script and the GIF beneath the page. A shared tracking account is a common sign of coordination, but anyone can copy a tracking snippet, so it is still a lead to verify.
 
 After the page loads, `assets/js/primenews.js` uses jQuery to fetch `api/most-read.json` and fill the Most read list, so the tree shows a local JSON request made after the CDN scripts. On narrow screens the Sections menu uses Bootstrap's Collapse. It only opens on a click, but the script loads either way.
 
@@ -158,7 +163,7 @@ These are what the sites are built to show. They have not been checked against a
 | Where to look | What you should see | What it means |
 | --- | --- | --- |
 | Screenshots | Three pages that look nothing alike. | Appearance gives no hint of a link. |
-| Capture tree | One host per demo site, plus `ipinfo.io` on Market and the Bootstrap host on NewsCorp. | No request connects the demo sites to each other. |
+| Capture tree | One host per demo site, plus `ipinfo.io` on Market and the Bootstrap host on NewsCorp. | No request connects Market, HFH and NewsCorp to each other. |
 | `common.css`, `ui-helper.js` | The same hash in all three captures. | The sites share code. A lead, not proof. |
 | `badge-verified.svg` | The same hash on Market and NewsCorp. | An image copied between sites. |
 | `europe-outage-monitoring.svg` | The same hash as HFH's `network-topology.svg`. | Content matches despite a different name and path. |
