@@ -47,12 +47,11 @@ Requests for any other hostname get a `404`. Directory listings are disabled.
 | Market | `market` | `ash_guest=guest-4471` |
 | HFH | `hfh` | `hfh_visitor=v-20261020-0815` |
 | NewsCorp | `newscorp` | `nld_reader=reader-0042` |
-
-PrimeNews gets `X-Demo-Site: primenews` and no cookie.
+| PrimeNews | `primenews` | `pn_visitor=pv-7731` |
 
 The cookies use `Path=/; HttpOnly; SameSite=Lax` without a `Domain`, so each one stays on its own subdomain. They have no `Secure` flag, so they also work over plain HTTP.
 
-After the page loads, `ui-helper.js` fetches `/api/session.json` and shows its message in the header. If the capture starts at `/`, that request and the later asset requests carry the cookie. A capture that starts on a subpage has no cookie.
+After the page loads, `ui-helper.js` fetches `/api/session.json` and shows its message in the header. PrimeNews does not load `ui-helper.js`, because its hash would link PrimeNews to Market and HFH. There, jQuery's request for `api/most-read.json` is the later request that sends the cookie back. If the capture starts at `/`, that request and the later asset requests carry the cookie. A capture that starts on a subpage has no cookie.
 
 ## Shared resources
 
@@ -111,7 +110,7 @@ Capture `https://newscorp.internetpolice.com/` and `https://primenews.internetpo
 | jQuery 3.7.1 and Bootstrap 5.3.3 JavaScript | Not loaded | From cdnjs and jsDelivr | Common public libraries. They show what PrimeNews depends on, not who runs it. |
 | Design, font and favicon | Serif broadsheet, EB Garamond | Red and yellow tabloid, PT Sans Narrow | The look gives no hint of a link. |
 
-PrimeNews leaves out NewsCorp's `europe-outage-monitoring.svg` and `badge-verified.svg` on purpose, because those files also link NewsCorp to HFH and Market. It does not load `common.css` or `ui-helper.js` and sets no cookie, so it only connects to NewsCorp.
+PrimeNews leaves out NewsCorp's `europe-outage-monitoring.svg` and `badge-verified.svg` on purpose, because those files also link NewsCorp to HFH and Market. It does not load `common.css` or `ui-helper.js`, so it only connects to NewsCorp. Its `pn_visitor` cookie is host-only, so the requests to NewsCorp do not carry it.
 
 On every page of both sites, `assets/js/profile-loader.js` adds a script tag for `assets/js/profiler.js` on the NewsCorp host. It derives that host from the current one, so it works locally and on the deployment domain. `profiler.js` then requests `/api/pixel.gif?account=NLD-20431&page=<path>` from NewsCorp, a 1×1 GIF. In a PrimeNews capture, expect `newscorp.internetpolice.com` in the tree with the script and the GIF beneath the page. A shared tracking account is a common sign of coordination, but anyone can copy a tracking snippet, so it is still a lead to verify.
 
@@ -181,6 +180,36 @@ These are what the sites are built to show. They have not been checked against a
 | `ipinfo.io` on Market | A cross-origin request that returns JSON. | The page tells a third party who visited. |
 | URL node for `/` | `Set-Cookie` and `X-Demo-Site`. | A server-set, host-only cookie. |
 | `/api/session.json` | The request sends the homepage cookie. | The cookie is used on a later request. |
+
+## Lookyloo API with pylookyloo
+
+`pylookyloo_demo.py` shows the same findings through the [pylookyloo API](https://pylookyloo.readthedocs.io/en/stable/api_reference.html). Set it up once in a virtual environment:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install pylookyloo==1.43.1
+```
+
+The script talks to `https://lookyloo.demo.cudeso.be` unless `LOOKYLOO_URL` is set. That instance has a self-signed certificate, so add `-k`. Wherever a command takes a UUID, the capture's tree link works too.
+
+| Command | API calls | What it shows |
+| --- | --- | --- |
+| `capture URL [--locale be-BY] [--timezone Europe/Minsk]` | `submit`, `get_status`, then the `report` calls | Submits a listed capture, waits up to two minutes and prints the tree link and report. |
+| `report UUID` | `get_info`, `get_capture_stats`, `get_redirects`, `get_hostnames`, `get_cookies` | Title, redirect chain, hostnames and cookies of a capture. |
+| `related UUID` | `get_hashes`, `get_hash_occurrences` | Response bodies that other captures received too, named after the matching file in `sites/` where there is one. |
+| `compare LEFT RIGHT` | `compare_captures` | Lookyloo's comparison of two captures, including the URLs both loaded. |
+
+For example:
+
+```bash
+.venv/bin/python pylookyloo_demo.py -k capture http://market.internetpolice.com/ --locale be-BY
+.venv/bin/python pylookyloo_demo.py -k related <PrimeNews capture UUID>
+.venv/bin/python pylookyloo_demo.py -k compare <NewsCorp capture UUID> <PrimeNews capture UUID>
+```
+
+`compare` and `related` answer different questions. `compare` matches URLs, so for NewsCorp and PrimeNews it finds the profiler, the beacon and the grid stylesheet. `related` matches content, so it also finds the two article images and `profile-loader.js`, which have the same bytes under different URLs.
+
+Checked against the demo instance on 10 November 2026. Its URL and hostname occurrence endpoints returned `Internal Server Error` for most lookups, so the script does not use them. The API also does not say which URL a body hash belongs to, which is why `related` hashes the local files to name them.
 
 ## Screenshots
 

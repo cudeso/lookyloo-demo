@@ -18,8 +18,9 @@ HOMEPAGE_COOKIES = {
     "market": "ash_guest=guest-4471",
     "hfh": "hfh_visitor=v-20261020-0815",
     "newscorp": "nld_reader=reader-0042",
+    "primenews": "pn_visitor=pv-7731",
 }
-SITES = (*HOMEPAGE_COOKIES, "tools4leas", "primenews")
+SITES = (*HOMEPAGE_COOKIES, "tools4leas")
 HOSTS = {f"{site}.{BASE_DOMAIN}": site for site in SITES}
 
 # Redirect chain for the HFH demo. 302 rather than 301, so a browser does not cache a hop between captures.

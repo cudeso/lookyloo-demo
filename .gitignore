@@ -4,3 +4,4 @@ sites/tools4leas/
 .$lookyloo-use-cases.drawio.bkp
 .$lookyloo-use-cases.drawio.dtmp
 __pycache__/server.cpython-312.pyc
+.venv/
