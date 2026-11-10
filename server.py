@@ -8,8 +8,8 @@ from urllib.parse import urlsplit
 # Deployment settings. Sites answer on <site>.<DEMO_BASE_DOMAIN>, for example market.internetpolice.com.
 # Use DEMO_BASE_DOMAIN=localhost for local development (market.localhost resolves to loopback in browsers).
 BASE_DOMAIN = os.environ.get("DEMO_BASE_DOMAIN", "internetpolice.com")
-BIND = os.environ.get("DEMO_BIND", "127.0.0.1")
-PORT = int(os.environ.get("DEMO_PORT", "80"))
+BIND = os.environ.get("DEMO_BIND", "0.0.0.0")
+PORT = int(os.environ.get("DEMO_PORT", "8080"))
 
 SITES_DIR = Path(__file__).resolve().parent / "sites"
 
