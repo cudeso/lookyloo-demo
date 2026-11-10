@@ -8,7 +8,7 @@ All names, people, companies, listings and data are invented. Each site shows a 
 
 | Site | Document root | Public URL | Entry pages |
 | --- | --- | --- | --- |
-| Ashmarket (forum) | `sites/market/` | `https://market.internetpolice.com/` | `/`, `/thread.html`, `/login.html`, `/rules.html`, `/blocked` (403) |
+| Ashmarket (forum) | `sites/market/` | `https://market.internetpolice.com/` | `/`, `/thread.html`, `/login.html`, `/rules.html` |
 | HFH Network Services (website monitoring) | `sites/hfh/` | `https://hfh.internetpolice.com/` | `/`, `/report.html`, `/services` (redirect) |
 | The Northline Dispatch (news) | `sites/newscorp/` | `https://newscorp.internetpolice.com/` | `/`, `/outage-monitoring.html`, `/forum-reputation.html` |
 | PrimeNews (news) | `sites/primenews/` | `https://primenews.internetpolice.com/` | `/`, `/web-shops-monitoring.html`, `/forum-badges.html` |
@@ -134,17 +134,15 @@ In a capture, expect a `GET` to `ipinfo.io` under the Market page that returns J
 
 `ipinfo.io` is a live service used without an API key, which is rate-limited. The capture browser needs internet access.
 
-## Time zone block on Market
+## Language block on Market
 
-Every Market page first runs `assets/js/region-check.js`, before the page renders. If the browser reports the time zone `Europe/Minsk`, the script replaces the page with `/blocked`, and `server.py` answers that path with a real `403 Forbidden` and a block page. Any other time zone gets the normal forum. Use it to show that what a site serves can depend on the capture settings.
+`server.py` refuses Market requests whose preferred language, the first entry in `Accept-Language`, is `be`, `be-BY` or `ru-BY`. It answers the requested URL itself with `403 Forbidden` and the block page from `blocked.html`, and sets no cookie. Every other language gets the normal forum, including `ru-RU` and a list that only mentions `be` further down. Use it to show that what a site serves can depend on the capture settings.
 
-The time zone is not part of the HTTP request, so the server cannot see it. The decision is made in the browser, which makes this a JavaScript redirect followed by a `403`, not a server-side block.
+The block page has inline styles and an empty favicon, so the refusal is the only request in the capture.
 
-Capture `http://market.internetpolice.com/` twice: once with the default settings, and once with the capture's time zone set to `Europe/Minsk`, if your Lookyloo instance offers that setting. Expected, not yet checked in a capture: the second capture shows the page, then `/blocked` with status `403`, and a screenshot of the block page instead of the forum. The homepage cookie is still set, because `/` loads before the script runs.
+Capture `http://market.internetpolice.com/` twice: once with the default settings, and once with the browser language set to `be-BY`, through the capture's locale or an `Accept-Language: be-BY` header, depending on what your Lookyloo instance offers. Expected, not yet checked in a capture: the second capture contains only the `http` to `https` redirect and a `403` for `/`, with a screenshot of the block page.
 
-The browser has already started loading the forum's styles, images and scripts when the script switches page, so some of those requests show as aborted under `/`. The block page has inline styles and an empty favicon, so nothing loads beneath `/blocked`. If it loaded `market.css` again, Lookyloo attached that request under `region-check.js` and marked it as the rendered page instead of `/blocked`.
-
-`/blocked.html` is the same page served as a static file with `200`. Only `/blocked` returns `403`.
+A time zone cannot be used for this. The browser does not send it, so only a script on the page can read it, and by then Chrome has already requested the page's styles, images and scripts. That left aborted requests in the tree and confused Lookyloo about which page was rendered.
 
 ## Redirect chain on HFH
 

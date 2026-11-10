@@ -28,10 +28,8 @@ REDIRECTS = {
     ("hfh", "/external"): "https://www.cudeso.be/",
 }
 
-# The browser's time zone never reaches the server, so Market's region-check.js decides and requests this path.
-FORBIDDEN = {
-    ("market", "/blocked"): "blocked.html",
-}
+# Market refuses browsers whose preferred language is Belarusian or Russian (Belarus), so the capture's language decides.
+BLOCKED_LANGUAGES = {"be", "be-by", "ru-by"}
 
 
 class DemoHandler(SimpleHTTPRequestHandler):
@@ -50,6 +48,7 @@ class DemoHandler(SimpleHTTPRequestHandler):
         ".txt": "text/plain; charset=utf-8",
     }
     site = None
+    forbidden = False
 
     def do_GET(self):
         if self.select_site() and not self.send_redirect() and not self.send_forbidden():
@@ -79,10 +78,11 @@ class DemoHandler(SimpleHTTPRequestHandler):
         return True
 
     def send_forbidden(self):
-        page = FORBIDDEN.get((self.site, urlsplit(self.path).path))
-        if page is None:
+        language = self.headers.get("Accept-Language", "").split(",")[0].split(";")[0].strip().lower()
+        if self.site != "market" or language not in BLOCKED_LANGUAGES:
             return False
-        body = (SITES_DIR / self.site / page).read_bytes()
+        self.forbidden = True
+        body = (SITES_DIR / "market" / "blocked.html").read_bytes()
         self.send_response(403)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
@@ -94,7 +94,7 @@ class DemoHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
         if self.site:
             self.send_header("X-Demo-Site", self.site)
-            if self.site in HOMEPAGE_COOKIES and urlsplit(self.path).path in ("/", "/index.html"):
+            if self.site in HOMEPAGE_COOKIES and not self.forbidden and urlsplit(self.path).path in ("/", "/index.html"):
                 self.send_header("Set-Cookie", f"{HOMEPAGE_COOKIES[self.site]}; Path=/; HttpOnly; SameSite=Lax")
         super().end_headers()
 
